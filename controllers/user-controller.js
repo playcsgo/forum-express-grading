@@ -39,7 +39,13 @@ const userController = {
   },
   getUser: (req, res, next) => {
     return Promise.all([
-      User.findByPk(req.params.id, { raw: true }),
+      User.findByPk(req.params.id, {
+        include: [
+          { model: Restaurant, as: 'FavoritedRestaurants' },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      }),
       Comment.findAndCountAll({
         include: Restaurant,
         where: { user_id: req.params.id },
@@ -48,10 +54,14 @@ const userController = {
       })
     ])
       .then(([user, comments]) => {
-        res.render('users/profile', {
-          user,
-          comments
-        })
+        user = {
+          ...user.toJSON(),
+          favoritedCount: user.FavoritedRestaurants.length,
+          followingsCount: user.Followings.length,
+          followersCount: user.Followers.length
+        }
+        console.log(user)
+        res.render('users/profile', { user, comments })
       })
       .catch(err => next(err))
   },
