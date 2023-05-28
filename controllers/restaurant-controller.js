@@ -115,7 +115,7 @@ const restaurantColler = {
         restaurants = restaurants.map(r => ({
           ...r.toJSON(),
           favoritedCount: r.FavoritedUsers.length,
-          isFavorited: req.user.FavoritedRestaurants.some(f => f.id === r.id)
+          isFavorited: req.user && req.user.FavoritedRestaurants.some(f => f.id === r.id)
           // description: r.description.substring(0, 40)
         }))
         restaurants.sort((a, b) => b.favoritedCount - a.favoritedCount)

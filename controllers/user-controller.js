@@ -60,7 +60,6 @@ const userController = {
           followingsCount: user.Followings.length,
           followersCount: user.Followers.length
         }
-        console.log(user)
         res.render('users/profile', { user, comments })
       })
       .catch(err => next(err))
