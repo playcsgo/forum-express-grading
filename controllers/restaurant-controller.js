@@ -119,7 +119,7 @@ const restaurantColler = {
           // description: r.description.substring(0, 40)
         }))
         restaurants.sort((a, b) => b.favoritedCount - a.favoritedCount)
-        return res.render('Top 10 人氣餐廳', { restaurants })
+        return res.render('top-restaurants', { restaurants })
       })
       .catch(err => next(err))
   }
