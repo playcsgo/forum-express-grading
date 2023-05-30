@@ -56,9 +56,9 @@ const userController = {
       .then(([user, comments]) => {
         user = {
           ...user.toJSON(),
-          favoritedCount: user.FavoritedRestaurants.length,
-          followingsCount: user.Followings.length,
-          followersCount: user.Followers.length
+          favoritedCount: user.FavoritedRestaurants && user.FavoritedRestaurants.length,
+          followingsCount: user.Followings && user.FavoritedRestaurants.length,
+          followersCount: user.Followers && user.FavoritedRestaurants.length
         }
         res.render('users/profile', { user, comments })
       })
